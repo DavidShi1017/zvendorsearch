@@ -58,7 +58,7 @@
             <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                 <CheckBox selected="{ChgCountry}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
                 <Label text="Country" width="8rem"/>
-                <Input value="{SupplierCountry}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgCountry}}" width="18rem"/>
+                <Input value="{Country}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgCountry}}" width="18rem"/>
             </HBox>
         </VBox>
     </l:Grid>

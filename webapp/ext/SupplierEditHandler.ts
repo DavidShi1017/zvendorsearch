@@ -5,7 +5,7 @@ import ODataModel from "sap/ui/model/odata/v4/ODataModel";
 import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
 
 // Service schema namespace (from $metadata) — needed to address the bound actions.
-const NS = "com.sap.gateway.srvd.zui_vo_suppliersearch.v0001";
+const NS = "com.sap.gateway.srvd.zui_vo_mysupplier.v0001";
 
 /**
  * FE custom action handler for the Supplier Object Page "Edit" button (App① UPDATE entry).
@@ -25,15 +25,13 @@ export async function onEditSupplier(this: {
     routing: { navigateToRoute: (route: string, params: object) => void };
 }): Promise<void> {
     const oCtx = this.getBindingContext();
-    const sSupplierId = oCtx.getProperty("SupplierId") as string;
+    const sSupplierId = oCtx.getProperty("Supplier") as string;
     const oModel = oCtx.getModel() as ODataModel;
 
     BusyIndicator.show(0);
     try {
         // 1. Deep-create the prefilled UPDATE request (active $self).
-        const oCreate = oModel.bindContext(
-            `/VendorUpdateRequest/${NS}.createUpdateRequest(...)`
-        ) as ODataContextBinding;
+        const oCreate = oModel.bindContext(`${NS}.createUpdateRequest(...)`, oCtx) as ODataContextBinding;
         oCreate.setParameter("SupplierId", sSupplierId);
         await oCreate.invoke();
         const oActive = oCreate.getBoundContext() as Context;
@@ -45,7 +43,7 @@ export async function onEditSupplier(this: {
         //    so UI5 sends If-Match:* — this avoids a separate round-trip just to read the ETag first
         //    (every round-trip is ~2s over the dev proxy to the remote system).
         const oEdit = oModel.bindContext(
-            `/VendorUpdateRequest(RequestUuid=${sUuid},IsActiveEntity=true)/${NS}.Edit(...)`
+            `/UpdateRequest(RequestUuid=${sUuid},IsActiveEntity=true)/${NS}.Edit(...)`
         ) as ODataContextBinding;
         oEdit.setParameter("PreserveChanges", false);
         await oEdit.invoke(undefined, true);

@@ -2,8 +2,8 @@
     <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
         <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
     </edmx:Reference>
-    <edmx:Reference Uri="/sap/opu/odata4/sap/zui_vo_suppliersearch_o4/srvd/sap/zui_vo_suppliersearch/0001/$metadata">
-        <edmx:Include Namespace="com.sap.gateway.srvd.zui_vo_suppliersearch.v0001" Alias="SAP__self"/>
+    <edmx:Reference Uri="/sap/opu/odata4/sap/zui_vo_mysupplier_o4/srvd/sap/zui_vo_mysupplier/0001/$metadata">
+        <edmx:Include Namespace="com.sap.gateway.srvd.zui_vo_mysupplier.v0001" Alias="SAP__self"/>
     </edmx:Reference>
     <edmx:DataServices>
         <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="local">

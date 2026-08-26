@@ -7,6 +7,50 @@ import ODataContextBinding from "sap/ui/model/odata/v4/ODataContextBinding";
 // Service schema namespace (from $metadata) — needed to address the bound actions.
 const NS = "com.sap.gateway.srvd.zui_vo_mysupplier.v0001";
 
+type ODataErrorPayload = {
+    error?: {
+        message?: string;
+        details?: Array<{ message?: string }>;
+        innererror?: {
+            ErrorDetails?: {
+                "@SAP__common.TransactionId"?: string;
+                "@SAP__common.Timestamp"?: string;
+            };
+        };
+    };
+};
+
+function formatBackendError(e: unknown): string {
+    const sFallback = (e as { message?: string })?.message ?? String(e);
+    const oPayload = (e as { error?: ODataErrorPayload["error"] })?.error;
+    if (!oPayload) {
+        return sFallback;
+    }
+
+    const aLines: string[] = [];
+    if (oPayload.message) {
+        aLines.push(oPayload.message);
+    }
+
+    if (Array.isArray(oPayload.details)) {
+        for (const oDetail of oPayload.details) {
+            if (oDetail?.message) {
+                aLines.push(oDetail.message);
+            }
+        }
+    }
+
+    const oErrorDetails = oPayload.innererror?.ErrorDetails;
+    if (oErrorDetails?.["@SAP__common.TransactionId"]) {
+        aLines.push(`TransactionId: ${oErrorDetails["@SAP__common.TransactionId"]}`);
+    }
+    if (oErrorDetails?.["@SAP__common.Timestamp"]) {
+        aLines.push(`Timestamp: ${oErrorDetails["@SAP__common.Timestamp"]}`);
+    }
+
+    return aLines.length > 0 ? aLines.join("\n") : sFallback;
+}
+
 function normalizeSupplierId(sValue: string): string {
     const sTrimmed = sValue.trim();
     if (/^\d+$/.test(sTrimmed)) {
@@ -19,12 +63,9 @@ function normalizeSupplierId(sValue: string): string {
  * FE custom action handler for the Supplier Object Page "Edit" button (App① UPDATE entry).
  *
  * 1. Deep-creates a prefilled UPDATE request from the current supplier (createUpdateRequest → active $self).
- * 2. Navigates to the returned request using its runtime IsActiveEntity flag.
- *    If backend already created a draft, we go directly to that draft.
- *
- * NB: do not force a second Edit(...) call here; some backend validations can reject it
- * for incomplete source master data (e.g. mandatory postal/email), while navigation to
- * the created request still works.
+ * 2. Puts it straight into a draft via the entity's own draft `Edit` action.
+ * 3. Navigates to the draft (IsActiveEntity=false) → the object page opens in EDIT mode,
+ *    so the requestor lands editable with no second "Edit" click (FE V4 sets ui>/isEditable=true).
  *
  * `this` is the FE V4 ExtensionAPI (routing / getBindingContext).
  */
@@ -54,6 +95,15 @@ export async function onEditSupplier(this: {
 
     BusyIndicator.show(0);
     try {
+        // eslint-disable-next-line no-console
+        console.info("[SupplierEdit] source row:", {
+            Supplier: oCtx.getProperty("Supplier"),
+            SupplierName: oCtx.getProperty("SupplierName"),
+            Email: oCtx.getProperty("Email"),
+            PostalCode: oCtx.getProperty("PostalCode"),
+            Country: oCtx.getProperty("Country")
+        });
+
         // 1. Deep-create the prefilled UPDATE request.
         // createUpdateRequest is bound to Collection(UpdateRequestType), not to ZSUPPLIER_VO.
         let oActive: Context | null = null;
@@ -85,17 +135,31 @@ export async function onEditSupplier(this: {
         // eslint-disable-next-line no-console
         console.log("[SupplierEdit] request ready:", sUuid, "IsActiveEntity=", bIsActive);
 
-        // 2. Navigate to the created request. If backend returned a draft, this opens directly in draft context.
+        // 2. Turn the active request into a draft via the `Edit` action so the object page
+        //    opens in edit mode (FE V4 ui>/isEditable becomes true on the draft context).
+        //    Invoke with bIgnoreETag=true so UI5 sends If-Match:* (skips a separate ETag read).
+        if (bIsActive) {
+            const oEdit = oModel.bindContext(
+                `/UpdateRequest(RequestUuid=${sUuid},IsActiveEntity=true)/${NS}.Edit(...)`
+            ) as ODataContextBinding;
+            oEdit.setParameter("PreserveChanges", false);
+            await oEdit.invoke(undefined, true);
+            // eslint-disable-next-line no-console
+            console.log("[SupplierEdit] draft ready for request:", sUuid);
+        }
+
+        // 3. Navigate to the draft (IsActiveEntity=false) → the object page opens in EDIT mode.
         this.routing.navigateToRoute("VendorUpdateRequestObjectPage", {
-            key: `RequestUuid=${sUuid},IsActiveEntity=${bIsActive}`
+            key: `RequestUuid=${sUuid},IsActiveEntity=false`
         });
     } catch (e) {
         BusyIndicator.hide();
         // eslint-disable-next-line no-console
         console.error("[SupplierEdit] failed:", e);
+        const sBackendError = formatBackendError(e);
         MessageBox.error(
             "Could not open the update request in edit mode:\n" +
-                ((e as { message?: string })?.message ?? String(e))
+                sBackendError
         );
     }
 }

@@ -40,7 +40,7 @@ server:
         ignoreCertErrors: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
           - path: /sap
-            url: https://my402253.s4hana.cloud.sap
+            url: https://my402221.s4hana.cloud.sap
             destination: DSGPublic_DevelopmentTenant
             authenticationType: reentranceTicket
 builder:

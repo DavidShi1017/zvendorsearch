@@ -16,7 +16,7 @@ builder:
       afterTask: generateCachebusterInfo
       configuration:
         target:
-          url: https://my402253.s4hana.cloud.sap
+          url: https://my402221.s4hana.cloud.sap
         app:
           name: ZVEOB_SUPPLIER
           description: Vendor Onboarding Supplier Search

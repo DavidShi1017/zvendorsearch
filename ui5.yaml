@@ -27,7 +27,7 @@ server:
           version: 1.148.8
         backend:
           - path: /sap
-            url: https://my402253.s4hana.cloud.sap
+            url: https://my402221.s4hana.cloud.sap
             destination: DSGPublic_DevelopmentTenant
             authenticationType: reentranceTicket
     - name: fiori-tools-appreload

@@ -41,7 +41,7 @@ server:
         backend:
           - path: /sap
             url: https://my402221.s4hana.cloud.sap
-            destination: DSGPublic_DevelopmentTenant
+            destination: DSGPublic_CustomizingTenant
             authenticationType: reentranceTicket
 builder:
   customTasks:

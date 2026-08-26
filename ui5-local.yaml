@@ -41,6 +41,8 @@ server:
         backend:
           - path: /sap
             url: https://my402253.s4hana.cloud.sap
+            destination: DSGPublic_DevelopmentTenant
+            authenticationType: reentranceTicket
 builder:
   customTasks:
     - name: ui5-tooling-transpile-task

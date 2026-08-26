@@ -19,12 +19,12 @@ function normalizeSupplierId(sValue: string): string {
  * FE custom action handler for the Supplier Object Page "Edit" button (App① UPDATE entry).
  *
  * 1. Deep-creates a prefilled UPDATE request from the current supplier (createUpdateRequest → active $self).
- * 2. Puts it straight into a draft via the entity's own draft `Edit` action.
- * 3. Navigates to the draft (IsActiveEntity=false) → the object page opens in EDIT mode,
- *    so the requestor lands editable with no second "Edit" click.
+ * 2. Navigates to the returned request using its runtime IsActiveEntity flag.
+ *    If backend already created a draft, we go directly to that draft.
  *
- * NB: we cannot use this.editFlow.editDocument here — editFlow is scoped to the *current*
- * (SupplierSearch, read-only) page, so it can't find an edit action for VendorUpdateRequest.
+ * NB: do not force a second Edit(...) call here; some backend validations can reject it
+ * for incomplete source master data (e.g. mandatory postal/email), while navigation to
+ * the created request still works.
  *
  * `this` is the FE V4 ExtensionAPI (routing / getBindingContext).
  */
@@ -77,25 +77,17 @@ export async function onEditSupplier(this: {
         }
 
         // The action-result context's path is a deferred-operation path, not the entity's
-        // canonical path — so rebuild the canonical path from the key to address the entity.
+        // canonical path — so rebuild the canonical key from returned properties.
         const sUuid = oActive.getProperty("RequestUuid") as string;
-
-        // 2. Turn the active request into a draft via the `Edit` action. Invoke with bIgnoreETag=true
-        //    so UI5 sends If-Match:* — this avoids a separate round-trip just to read the ETag first
-        //    (every round-trip is ~2s over the dev proxy to the remote system).
-        const oEdit = oModel.bindContext(
-            `/UpdateRequest(RequestUuid=${sUuid},IsActiveEntity=true)/${NS}.Edit(...)`
-        ) as ODataContextBinding;
-        oEdit.setParameter("PreserveChanges", false);
-        await oEdit.invoke(undefined, true);
+        const bIsActive = Boolean(oActive.getProperty("IsActiveEntity"));
         BusyIndicator.hide();
 
         // eslint-disable-next-line no-console
-        console.log("[SupplierEdit] draft ready for request:", sUuid);
+        console.log("[SupplierEdit] request ready:", sUuid, "IsActiveEntity=", bIsActive);
 
-        // 3. Navigate to the draft (shares the key, IsActiveEntity=false) → object page opens in EDIT mode.
+        // 2. Navigate to the created request. If backend returned a draft, this opens directly in draft context.
         this.routing.navigateToRoute("VendorUpdateRequestObjectPage", {
-            key: `RequestUuid=${sUuid},IsActiveEntity=false`
+            key: `RequestUuid=${sUuid},IsActiveEntity=${bIsActive}`
         });
     } catch (e) {
         BusyIndicator.hide();

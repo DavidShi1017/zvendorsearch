@@ -30,8 +30,9 @@ export async function onEditSupplier(this: {
 
     BusyIndicator.show(0);
     try {
-        // 1. Deep-create the prefilled UPDATE request (active $self).
-        const oCreate = oModel.bindContext(`${NS}.createUpdateRequest(...)`, oCtx) as ODataContextBinding;
+        // 1. Deep-create the prefilled UPDATE request.
+        // createUpdateRequest is bound to Collection(UpdateRequestType), not to ZSUPPLIER_VO.
+        const oCreate = oModel.bindContext(`/UpdateRequest/${NS}.createUpdateRequest(...)`) as ODataContextBinding;
         oCreate.setParameter("SupplierId", sSupplierId);
         await oCreate.invoke();
         const oActive = oCreate.getBoundContext() as Context;

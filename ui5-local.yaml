@@ -40,18 +40,7 @@ server:
         ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
         backend:
           - path: /sap
-            url: https://sap-f4p-2023.dcsc.be
-            client: '130'
-    - name: sap-fe-mockserver
-      beforeMiddleware: csp
-      configuration:
-        mountPath: /
-        services:
-          - urlPath: /sap/opu/odata4/sap/zui_vo_suppliersearch_o4/srvd/sap/zui_vo_suppliersearch/0001
-            metadataPath: ./webapp/localService/mainService/metadata.xml
-            mockdataPath: ./webapp/localService/mainService/data
-            generateMockData: true
-        annotations: []
+            url: https://my402253.s4hana.cloud.sap
 builder:
   customTasks:
     - name: ui5-tooling-transpile-task

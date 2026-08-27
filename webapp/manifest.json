@@ -159,12 +159,20 @@
               "content": {
                 "body": {
                   "sections": {
-                    "SupplierChanges": {
+                    "SupplierChangesGeneral": {
                       "template": "zvendorsearch.ext.SupplierChanges",
-                      "title": "Supplier Data",
+                      "title": "General Information",
                       "position": {
                         "placement": "After",
                         "anchor": "General"
+                      }
+                    },
+                    "SupplierChangesAddress": {
+                      "template": "zvendorsearch.ext.SupplierAddressChanges",
+                      "title": "Address",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "SupplierChangesGeneral"
                       }
                     }
                   }

@@ -33,6 +33,75 @@
                     </Collection>
                 </Annotation>
             </Annotations>
+            <Annotations Target="SAP__self.UpdateRequestType">
+                <Annotation Term="UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Supplier Maintenance"/>
+                        <PropertyValue Property="TypeNamePlural" String="Supplier Maintenance"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="RequestId"/></Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField"><PropertyValue Property="Value" Path="SupplierName"/></Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="General"/>
+                            <PropertyValue Property="Label" String="General Information"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.Identification"/>
+                            <PropertyValue Property="Position" Int="10"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Address"/>
+                            <PropertyValue Property="Label" String="Address"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#Address"/>
+                            <PropertyValue Property="Position" Int="20"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="Banks"/>
+                            <PropertyValue Property="Label" String="Bank Account"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Bank/@UI.LineItem"/>
+                            <PropertyValue Property="Position" Int="30"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="CompanyCodes"/>
+                            <PropertyValue Property="Label" String="Company Code"/>
+                            <PropertyValue Property="Target" AnnotationPath="_CompanyCode/@UI.LineItem"/>
+                            <PropertyValue Property="Position" Int="40"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="SupportingDocument"/>
+                            <PropertyValue Property="Label" String="Supporting Document"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Attachment/@UI.LineItem"/>
+                            <PropertyValue Property="Position" Int="50"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Address">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Street"/></Record>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="HouseNumber"/></Record>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="City"/></Record>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="PostalCode"/></Record>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Region"/></Record>
+                                <Record Type="UI.DataField"><PropertyValue Property="Value" Path="Country"/></Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField"><PropertyValue Property="Label" String="Supplier Name"/><PropertyValue Property="Value" Path="SupplierName"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Label" String="Email Address"/><PropertyValue Property="Value" Path="Email"/></Record>
+                        <Record Type="UI.DataField"><PropertyValue Property="Label" String="Contact Number"/><PropertyValue Property="Value" Path="ContactNumber"/></Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
         </Schema>
     </edmx:DataServices>
 </edmx:Edmx>

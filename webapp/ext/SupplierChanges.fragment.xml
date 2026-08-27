@@ -11,7 +11,6 @@
     -->
     <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="1" vSpacing="0" class="sapUiSmallMargin">
         <VBox>
-            <Title text="Name &amp; Contact" titleStyle="H5" class="sapUiSmallMarginBottom"/>
             <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                 <CheckBox selected="{ChgName}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
                 <Label text="Supplier Name" width="8rem"/>
@@ -26,39 +25,6 @@
                 <CheckBox selected="{ChgContact}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
                 <Label text="Contact Number" width="8rem"/>
                 <Input value="{ContactNumber}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgContact}}" width="18rem"/>
-            </HBox>
-        </VBox>
-        <VBox>
-            <Title text="Address" titleStyle="H5" class="sapUiSmallMarginBottom"/>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgAddress}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="Street" width="8rem"/>
-                <Input value="{Street}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgAddress}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgHouse}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="House No." width="8rem"/>
-                <Input value="{HouseNumber}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgHouse}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgCity}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="City" width="8rem"/>
-                <Input value="{City}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgCity}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgPostal}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="Postal Code" width="8rem"/>
-                <Input value="{PostalCode}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgPostal}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgRegion}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="State / Region" width="8rem"/>
-                <Input value="{Region}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgRegion}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <CheckBox selected="{ChgCountry}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
-                <Label text="Country" width="8rem"/>
-                <Input value="{Country}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgCountry}}" width="18rem"/>
             </HBox>
         </VBox>
     </l:Grid>

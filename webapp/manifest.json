@@ -163,8 +163,8 @@
                       "template": "zvendorsearch.ext.SupplierChanges",
                       "title": "General Information",
                       "position": {
-                        "placement": "After",
-                        "anchor": "General"
+                        "placement": "Before",
+                        "anchor": "Banks"
                       }
                     },
                     "SupplierChangesAddress": {

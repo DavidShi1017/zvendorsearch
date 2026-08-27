@@ -3,22 +3,27 @@
     xmlns="sap.m"
     xmlns:l="sap.ui.layout">
     <!--
-      UPDATE request "Supplier Data" custom section (plain controls for full layout control).
-      Each row: [ change-flag checkbox ] [ label ] [ value input ], flag first, label and value tight.
-      A value is editable only in edit mode AND when its flag is ticked - reacts instantly client-side.
-      Plain sap.m controls (not macro:Field) so rows can be laid out freely; value help (Country/Region
-      F4) is not wired here - can be added separately if needed.
+      UPDATE request "General Information" section, split into two columns:
+      Left  (read-only, no checkbox): Supplier ID, UEN
+      Right (editable, change-flag checkbox): Supplier Name, Email Address, Contact Number
+      Read-only rows have no checkbox and can't align with the checkbox rows, hence two columns.
     -->
     <l:Grid defaultSpan="XL6 L6 M12 S12" hSpacing="1" vSpacing="0" class="sapUiSmallMargin">
+        <VBox>
+            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+                <Label text="Supplier ID" width="8rem"/>
+                <Text text="{BusinessPartner}"/>
+            </HBox>
+            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+                <Label text="UEN" width="8rem"/>
+                <Text text="{Uen}"/>
+            </HBox>
+        </VBox>
         <VBox>
             <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                 <CheckBox selected="{ChgName}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
                 <Label text="Supplier Name" width="8rem"/>
                 <Input value="{SupplierName}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgName}}" width="18rem"/>
-            </HBox>
-            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
-                <Label text="UEN" width="8rem"/>
-                <Text text="{Uen}"/>
             </HBox>
             <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                 <CheckBox selected="{ChgEmail}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>

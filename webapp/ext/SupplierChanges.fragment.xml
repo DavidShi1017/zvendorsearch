@@ -17,6 +17,10 @@
                 <Input value="{SupplierName}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgName}}" width="18rem"/>
             </HBox>
             <HBox alignItems="Center" class="sapUiTinyMarginBottom">
+                <Label text="UEN" width="8rem"/>
+                <Text text="{Uen}"/>
+            </HBox>
+            <HBox alignItems="Center" class="sapUiTinyMarginBottom">
                 <CheckBox selected="{ChgEmail}" editable="{ui>/isEditable}" tooltip="Tick to change" class="sapUiTinyMarginEnd"/>
                 <Label text="Email Address" width="8rem"/>
                 <Input value="{Email}" editable="{= ${ui>/isEditable} &amp;&amp; !!${ChgEmail}}" width="18rem"/>

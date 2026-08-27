@@ -46,6 +46,54 @@
                         </PropertyValue>
                     </Record>
                 </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="RequestIdHeader"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#RequestIdHeader"/>
+                            <PropertyValue Property="Position" Int="10"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="RequestorHeader"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#RequestorHeader"/>
+                            <PropertyValue Property="Position" Int="20"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="SubmissionDateHeader"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#SubmissionDateHeader"/>
+                            <PropertyValue Property="Position" Int="30"/>
+                        </Record>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="ID" String="StatusHeader"/>
+                            <PropertyValue Property="Target" AnnotationPath="@UI.DataPoint#StatusHeader"/>
+                            <PropertyValue Property="Position" Int="40"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="RequestIdHeader">
+                    <Record>
+                        <PropertyValue Property="Title" String="Request ID"/>
+                        <PropertyValue Property="Value" Path="RequestId"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="RequestorHeader">
+                    <Record>
+                        <PropertyValue Property="Title" String="Requestor"/>
+                        <PropertyValue Property="Value" Path="Requestor"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="SubmissionDateHeader">
+                    <Record>
+                        <PropertyValue Property="Title" String="Submission Date"/>
+                        <PropertyValue Property="Value" Path="SubmissionDate"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.DataPoint" Qualifier="StatusHeader">
+                    <Record>
+                        <PropertyValue Property="Title" String="Status"/>
+                        <PropertyValue Property="Value" Path="Status"/>
+                    </Record>
+                </Annotation>
                 <Annotation Term="UI.Facets">
                     <Collection>
                         <Record Type="UI.ReferenceFacet">

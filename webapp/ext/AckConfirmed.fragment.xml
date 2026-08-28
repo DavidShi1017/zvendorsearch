@@ -1,0 +1,10 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+    <VBox>
+        <CheckBox
+            id="ackConfirmed"
+            selected="{AckConfirmed}"
+            required="true"
+            text="I hereby certify that, to the best of my knowledge, the information provided is true and accurate. I have contacted the supplier and conducted due diligence to confirm that these details are correct."
+            enabled="{ui>/isEditable}"/>
+    </VBox>
+</core:FragmentDefinition>
